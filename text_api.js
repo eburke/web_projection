@@ -12,7 +12,7 @@ function drawText(textData) {
   ctx.fillStyle = textData.backgroundColor;
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-  ctx.fillStyle = textData.textColor;
+  ctx.fillStyle = textData.foregroundColor;
   ctx.font = `${textData.fontSize}px ${textData.fontName}`;
 
   const textWidth = ctx.measureText(textData.text).width;

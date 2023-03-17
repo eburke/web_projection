@@ -30,6 +30,8 @@
         strokeWidth: strokeWidth,
         gap: gap,
         angle: angle,
+        foregroundColor: document.getElementById('lines_foregroundColor').value,
+        backgroundColor: document.getElementById('lines_backgroundColor').value,
       };
 
       projectorWindow.postMessage(linesData, "*");
@@ -43,7 +45,7 @@
         text: document.getElementById('text_text').value,
         fontSize: parseInt(document.getElementById('text_fontSize').value),
         fontName: document.getElementById('text_fontName').value,
-        textColor: document.getElementById('text_textColor').value,
+        foregroundColor: document.getElementById('text_foregroundColor').value,
         backgroundColor: document.getElementById('text_backgroundColor').value,
         angle: parseInt(document.getElementById('text_angle').value),
         solo: document.getElementById('text_solo').checked,
@@ -96,6 +98,14 @@
           <label for="lines_angle">Angle:</label>
           <input type="range" id="lines_angle" name="lines_angle" min="0" max="180" step="1" value="0"
             oninput="postLinesData()">
+
+            <label for="lines_foregroundColor">Line Color:</label>
+            <input type="color" id="lines_foregroundColor" name="lines_foregroundColor" value="#ffffff" oninput="postLinesData()">
+  
+            <label for="lines_backgroundColor">Background Color:</label>
+            <input type="color" id="lines_backgroundColor" name="lines_backgroundColor" value="#000000"
+              oninput="postLinesData()">
+  
         </form>
       </div>
 
@@ -127,12 +137,11 @@
             <option value="'Lucida Handwriting', cursive">Lucida Handwriting</option>
           </select>
 
-
           <label for="text_textColor">Text Color:</label>
-          <input type="color" id="text_textColor" name="text_textColor" value="#000000" oninput="postTextData()">
+          <input type="color" id="text_foregroundColor" name="text_foregroundColor" value="#ffffff" oninput="postTextData()">
 
           <label for="text_backgroundColor">Background Color:</label>
-          <input type="color" id="text_backgroundColor" name="text_backgroundColor" value="#ffffff"
+          <input type="color" id="text_backgroundColor" name="text_backgroundColor" value="#000000"
             oninput="postTextData()">
 
           <label for="text_angle">Angle:</label>

@@ -1,11 +1,12 @@
 function drawLines(linesData) {
-  const { strokeWidth, gap, angle } = linesData;
+  const { strokeWidth, gap, angle, foregroundColor, backgroundColor } = linesData;
 
   const canvas = document.getElementById("projectionCanvas");
   const ctx = canvas.getContext("2d");
 
   // Clear the canvas
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = backgroundColor;
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   // Calculate the center of the canvas
   const centerX = canvas.width / 2;
@@ -17,7 +18,7 @@ function drawLines(linesData) {
   ctx.translate(-centerX, -centerY);
 
   // Set the stroke style and line width
-  ctx.strokeStyle = "black";
+  ctx.strokeStyle = foregroundColor;
   ctx.lineWidth = strokeWidth;
 
   // Draw the horizontal lines
