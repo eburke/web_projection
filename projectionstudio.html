@@ -12,7 +12,7 @@
     function openProjectorWindow(focus = true) {
       if (!projectorWindow || projectorWindow.closed) {
         const features = "location=no,menubar=no,status=no,toolbar=no,scrollbars=no,resizable=yes";
-        projectorWindow = window.open('projector.html', '_blank', features); // 'location=no,menubar=no,toolbar=no');
+        projectorWindow = window.open('projector.html', '_blank', features);
       } else if (focus) {
         projectorWindow.focus();
       }
@@ -69,7 +69,6 @@
         shape: getSelectedShape()
       };
 
-      console.log("about to post the message: " + shapesData);
       projectorWindow.postMessage(shapesData, "*");
     }
 
@@ -139,23 +138,23 @@
       <div id="linesForm" class="form-container">
         <form>
           <label for="lines_strokeWidth">Stroke&nbsp;Width:</label>
-          <input type="range" id="lines_strokeWidth" name="lines_strokeWidth" min="1" max="100" step="1" value="2"
+          <input type="range" id="lines_strokeWidth" min="1" max="100" step="1" value="2"
             oninput="postLinesData()">
 
           <label for="lines_gap">Gap:</label>
-          <input type="range" id="lines_gap" name="lines_gap" min="1" max="100" step="1" value="8"
+          <input type="range" id="lines_gap" min="1" max="100" step="1" value="8"
             oninput="postLinesData()">
 
           <label for="lines_angle">Angle:</label>
-          <input type="range" id="lines_angle" name="lines_angle" min="0" max="180" step="1" value="0"
+          <input type="range" id="lines_angle" min="0" max="180" step="1" value="0"
             oninput="postLinesData()">
 
           <label for="lines_foregroundColor">Line&nbsp;Color:</label>
-          <input type="color" id="lines_foregroundColor" name="lines_foregroundColor" value="#ffffff"
+          <input type="color" id="lines_foregroundColor" value="#ffffff"
             oninput="postLinesData()">
 
           <label for="lines_backgroundColor">Background&nbsp;Color:</label>
-          <input type="color" id="lines_backgroundColor" name="lines_backgroundColor" value="#000000"
+          <input type="color" id="lines_backgroundColor" value="#000000"
             oninput="postLinesData()">
 
         </form>
@@ -190,21 +189,21 @@
           </select>
 
           <label for="text_textColor">Text&nbsp;Color:</label>
-          <input type="color" id="text_foregroundColor" name="text_foregroundColor" value="#ffffff"
+          <input type="color" id="text_foregroundColor" value="#ffffff"
             oninput="postTextData()">
 
           <label for="text_backgroundColor">Background&nbsp;Color:</label>
-          <input type="color" id="text_backgroundColor" name="text_backgroundColor" value="#000000"
+          <input type="color" id="text_backgroundColor" value="#000000"
             oninput="postTextData()">
 
           <label for="text_angle">Angle:</label>
-          <input type="range" id="text_angle" name="text_angle" value="0" min="0" max="360" oninput="postTextData()">
+          <input type="range" id="text_angle" value="0" min="0" max="360" oninput="postTextData()">
 
           <label for="text_solo">Solo:</label>
-          <input type="checkbox" id="text_solo" name="text_solo" oninput="postTextData()">
+          <input type="checkbox" id="text_solo" oninput="postTextData()">
 
           <label for="text_mirror">Mirror:</label>
-          <input type="checkbox" id="text_mirror" name="text_mirror" oninput="postTextData()">
+          <input type="checkbox" id="text_mirror" oninput="postTextData()">
         </form>
       </div>
 
