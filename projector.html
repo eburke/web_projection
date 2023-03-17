@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="lines_api.js"></script>
+  <script src="text_api.js"></script>
+  <title>Projector</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+    canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+  <script>
+    function resizeCanvas() {
+      const canvas = document.getElementById('projectionCanvas');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+
+    window.addEventListener("message", (event) => {
+      const evt_data = event.data;
+			if (evt_data.scene === "lines") {
+				drawLines(evt_data);
+      } else if (evt_data.scene === "text") {
+        drawText(evt_data);
+      }
+    });
+
+    window.onload = function() {
+      resizeCanvas();
+    }
+  </script>
+</head>
+<body>
+  <canvas id="projectionCanvas"></canvas>
+</body>
+</html>
+
