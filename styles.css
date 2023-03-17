@@ -50,6 +50,14 @@ h1 {
   background-color: lightgray;
 }
 
+.list-item-selected {
+  background-color: rgb(97, 100, 242);
+}
+
+.list-item-selected:hover {
+  background-color: rgb(65, 67, 191);
+}
+
 .form-container {
   display: none;
 }

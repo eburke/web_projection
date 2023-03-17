@@ -55,7 +55,40 @@
       projectorWindow.postMessage(textData, "*");
     }
 
+    function postShapesData() {
+      openProjectorWindow(false);
+
+      const shapesData = {
+        scene: "shapes",
+        foregroundColor: document.getElementById("shapes_foregroundColor").value,
+        backgroundColor: document.getElementById("shapes_backgroundColor").value,
+        hGap: parseInt(document.getElementById("shapes_hGap").value, 10),
+        vGap: parseInt(document.getElementById("shapes_vGap").value, 10),
+        width: parseInt(document.getElementById("shapes_width").value, 10),
+        height: parseInt(document.getElementById("shapes_height").value, 10),
+        shape: getSelectedShape()
+      };
+
+      console.log("about to post the message: " + shapesData);
+      projectorWindow.postMessage(shapesData, "*");
+    }
+
+    function getSelectedShape() {
+      let radioButtons = document.getElementsByName("shapes_shape");
+      let selectedShape;
+
+      for (let i = 0; i < radioButtons.length; i++) {
+        if (radioButtons[i].checked) {
+          selectedShape = radioButtons[i].value;
+          break;
+        }
+      }
+
+      return selectedShape;
+    }
+
     function showForm(formId) {
+      syncListSelection();
       const forms = document.querySelectorAll('.form-container');
       forms.forEach(form => {
         form.classList.remove('active');
@@ -64,6 +97,24 @@
         }
       });
     }
+
+    function syncListSelection() {
+      // Get the clicked element
+      var clickedElement = event.target;
+
+      // Get the list panel
+      var listPanel = document.getElementById('listPanel');
+
+      // Remove the 'list-item-selected' class from all list items
+      var listItems = listPanel.getElementsByClassName('list-item');
+      for (var i = 0; i < listItems.length; i++) {
+        listItems[i].classList.remove('list-item-selected');
+      }
+
+      // Add the 'list-item-selected' class to the clicked element
+      clickedElement.classList.add('list-item-selected');
+    }
+
   </script>
 </head>
 
@@ -99,13 +150,14 @@
           <input type="range" id="lines_angle" name="lines_angle" min="0" max="180" step="1" value="0"
             oninput="postLinesData()">
 
-            <label for="lines_foregroundColor">Line&nbsp;Color:</label>
-            <input type="color" id="lines_foregroundColor" name="lines_foregroundColor" value="#ffffff" oninput="postLinesData()">
-  
-            <label for="lines_backgroundColor">Background&nbsp;Color:</label>
-            <input type="color" id="lines_backgroundColor" name="lines_backgroundColor" value="#000000"
-              oninput="postLinesData()">
-  
+          <label for="lines_foregroundColor">Line&nbsp;Color:</label>
+          <input type="color" id="lines_foregroundColor" name="lines_foregroundColor" value="#ffffff"
+            oninput="postLinesData()">
+
+          <label for="lines_backgroundColor">Background&nbsp;Color:</label>
+          <input type="color" id="lines_backgroundColor" name="lines_backgroundColor" value="#000000"
+            oninput="postLinesData()">
+
         </form>
       </div>
 
@@ -117,7 +169,7 @@
       <div id="textForm" class="form-container">
         <form>
           <label for="text_text">Text:</label>
-          <input type="text" id="text_text" name="text_text" value="" oninput="postTextData()">
+          <input type="text" id="text_text" name="text_text" value="Enter Text Here " oninput="postTextData()">
 
           <label for="text_fontSize">Font Size:</label>
           <input type="range" id="text_fontSize" name="text_fontSize" value="16" min="5" max="200" step="1"
@@ -138,7 +190,8 @@
           </select>
 
           <label for="text_textColor">Text&nbsp;Color:</label>
-          <input type="color" id="text_foregroundColor" name="text_foregroundColor" value="#ffffff" oninput="postTextData()">
+          <input type="color" id="text_foregroundColor" name="text_foregroundColor" value="#ffffff"
+            oninput="postTextData()">
 
           <label for="text_backgroundColor">Background&nbsp;Color:</label>
           <input type="color" id="text_backgroundColor" name="text_backgroundColor" value="#000000"
@@ -162,16 +215,37 @@
         -->
       <div id="shapesForm" class="form-container">
         <form>
+          <label for="shapes_foregroundColor">Foreground&nbsp;Color:</label>
+          <input type="color" value="#ffffff" id="shapes_foregroundColor" oninput="postShapesData()">
+
+          <label for="shapes_backgroundColor">Background&nbsp;Color:</label>
+          <input type="color" id="shapes_backgroundColor" oninput="postShapesData()">
+
+          <label for="shapes_hGap">H Gap:</label>
+          <input type="range" id="shapes_hGap" min="0" max="100" value="10" oninput="postShapesData()">
+
+          <label for="shapes_vGap">V Gap:</label>
+          <input type="range" id="shapes_vGap" min="0" max="100" value="10" oninput="postShapesData()">
+
           <label for="shapes_width">Width:</label>
-          <input type="range" id="shapes_width" min="1" max="100" step="1">
+          <input type="range" id="shapes_width" min="1" max="200" value="10" oninput="postShapesData()">
+
           <label for="shapes_height">Height:</label>
-          <input type="range" id="shapes_height" min="1" max="100" step="1">
-          <label for="shapes_type">Shape&nbsp;Type:</label>
-          <select id="shapes_type">
-            <option value="rectangle">Rectangle</option>
-            <option value="oval">Oval</option>
-            <option value="triangle">Triangle</option>
-          </select>
+          <input type="range" id="shapes_height" min="1" max="200" value="10" oninput="postShapesData()">
+
+          <label>Shape:</label>
+          <div style="grid-column: 2 / 3">
+            <input type="radio" id="shapes_shape_rectangle" name="shapes_shape" value="Rectangles"
+              oninput="postShapesData()" checked>
+            <label for="shapes_shape_rectangle">Rectangle</label>
+            <br />
+            <input type="radio" id="shapes_shape_oval" name="shapes_shape" value="Ovals" oninput="postShapesData()">
+            <label for="shapes_shape_oval">Oval</label>
+            <br />
+            <input type="radio" id="shapes_shape_triangle" name="shapes_shape" value="Triangles"
+              oninput="postShapesData()">
+            <label for="shapes_shape_triangle">Triangle</label>
+          </div>
         </form>
       </div>
     </div>

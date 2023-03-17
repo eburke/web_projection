@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="lines_api.js"></script>
   <script src="text_api.js"></script>
+  <script src="shapes_api.js"></script>
   <title>Projector</title>
   <style>
     * {
@@ -38,6 +39,9 @@
 				drawLines(evt_data);
       } else if (evt_data.scene === "text") {
         drawText(evt_data);
+      } else if (evt_data.scene === "shapes") {
+        console.log("sending event to drawShapes " + evt_data); // todo
+        drawShapes(evt_data);
       }
     });
 
