@@ -6,6 +6,7 @@
   <script src="lines_api.js"></script>
   <script src="text_api.js"></script>
   <script src="shapes_api.js"></script>
+  <script src="images_api.js"></script>
   <title>Projector</title>
   <style>
     * {
@@ -22,9 +23,10 @@
       display: block;
       width: 100%;
       height: 100%;
+      background-color: black;
     }
   </style>
-  <script>
+  <script>    
     function resizeCanvas() {
       const canvas = document.getElementById('projectionCanvas');
       canvas.width = window.innerWidth;
@@ -35,12 +37,15 @@
 
     window.addEventListener("message", (event) => {
       const evt_data = event.data;
+
 			if (evt_data.scene === "lines") {
 				drawLines(evt_data);
       } else if (evt_data.scene === "text") {
         drawText(evt_data);
       } else if (evt_data.scene === "shapes") {
         drawShapes(evt_data);
+      } else if (evt_data.scene === "images") {
+        drawImages(evt_data);
       }
     });
 

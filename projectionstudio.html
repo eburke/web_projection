@@ -72,6 +72,27 @@
       projectorWindow.postMessage(shapesData, "*");
     }
 
+    let imageFile = null;
+
+    function postImagesData() {
+      if (imageFile) {
+        openProjectorWindow(false);
+
+        const imagesData = {
+          scene: "images",
+          imageFile: imageFile, // type File, never null
+          size: parseInt(document.getElementById("images_size").value),
+          angle: parseInt(document.getElementById("images_angle").value),
+          mirror: document.getElementById("images_mirror").checked,
+          backgroundColor: document.getElementById("images_backgroundColor").value,
+          solo: document.getElementById('images_solo').checked,
+        };
+
+        projectorWindow.postMessage(imagesData, "*");
+      }
+    }
+
+
     function getSelectedShape() {
       let radioButtons = document.getElementsByName("shapes_shape");
       let selectedShape;
@@ -88,6 +109,7 @@
 
     function showForm(formId) {
       syncListSelection();
+      openProjectorWindow(false);
       const forms = document.querySelectorAll('.form-container');
       forms.forEach(form => {
         form.classList.remove('active');
@@ -127,6 +149,7 @@
       <div class="list-item" onclick="showForm('linesForm')">Lines</div>
       <div class="list-item" onclick="showForm('textForm')">Text</div>
       <div class="list-item" onclick="showForm('shapesForm')">Shapes</div>
+      <div class="list-item" onclick="showForm('imagesForm')">Images</div>
     </div>
     <div id="controlPanel">
 
@@ -138,24 +161,19 @@
       <div id="linesForm" class="form-container">
         <form>
           <label for="lines_strokeWidth">Stroke&nbsp;Width:</label>
-          <input type="range" id="lines_strokeWidth" min="1" max="100" step="1" value="2"
-            oninput="postLinesData()">
+          <input type="range" id="lines_strokeWidth" min="1" max="100" step="1" value="2" oninput="postLinesData()">
 
           <label for="lines_gap">Gap:</label>
-          <input type="range" id="lines_gap" min="1" max="100" step="1" value="8"
-            oninput="postLinesData()">
+          <input type="range" id="lines_gap" min="1" max="100" step="1" value="8" oninput="postLinesData()">
 
           <label for="lines_angle">Angle:</label>
-          <input type="range" id="lines_angle" min="0" max="180" step="1" value="0"
-            oninput="postLinesData()">
+          <input type="range" id="lines_angle" min="0" max="180" step="1" value="0" oninput="postLinesData()">
 
           <label for="lines_foregroundColor">Line&nbsp;Color:</label>
-          <input type="color" id="lines_foregroundColor" value="#ffffff"
-            oninput="postLinesData()">
+          <input type="color" id="lines_foregroundColor" value="#ffffff" oninput="postLinesData()">
 
           <label for="lines_backgroundColor">Background&nbsp;Color:</label>
-          <input type="color" id="lines_backgroundColor" value="#000000"
-            oninput="postLinesData()">
+          <input type="color" id="lines_backgroundColor" value="#000000" oninput="postLinesData()">
 
         </form>
       </div>
@@ -189,12 +207,10 @@
           </select>
 
           <label for="text_textColor">Text&nbsp;Color:</label>
-          <input type="color" id="text_foregroundColor" value="#ffffff"
-            oninput="postTextData()">
+          <input type="color" id="text_foregroundColor" value="#ffffff" oninput="postTextData()">
 
           <label for="text_backgroundColor">Background&nbsp;Color:</label>
-          <input type="color" id="text_backgroundColor" value="#000000"
-            oninput="postTextData()">
+          <input type="color" id="text_backgroundColor" value="#000000" oninput="postTextData()">
 
           <label for="text_angle">Angle:</label>
           <input type="range" id="text_angle" value="0" min="0" max="360" oninput="postTextData()">
@@ -247,8 +263,46 @@
           </div>
         </form>
       </div>
+
+      <!--
+          **
+          ** Images
+          **
+        -->
+      <div id="imagesForm" class="form-container">
+        <form>
+          <label for="images_file_input">Image:</label>
+          <input type="file" id="images_file_input" accept="image/*">
+
+          <label for="images_size">Size:</label>
+          <input type="range" id="images_size" min="1" max="1000" value="100" oninput="postImagesData()">
+
+          <label for="images_angle">Angle:</label>
+          <input type="range" id="images_angle" min="0" max="360" step="1" value="0" oninput="postImagesData()">
+          
+          <label for="images_mirror">Mirror:</label>
+          <input type="checkbox" id="images_mirror" oninput="postImagesData()">
+
+          <label for="images_backgroundColor">Background&nbsp;Color:</label>
+          <input type="color" id="images_backgroundColor" oninput="postImagesData()">
+
+          <label for="images_solo">Solo:</label>
+          <input type="checkbox" id="images_solo" oninput="postImagesData()">
+
+        </form>
+      </div>
     </div>
   </div>
+
+  <script>
+    const fileInput = document.getElementById("images_file_input");
+
+    fileInput.addEventListener('change', (e) => {
+      imageFile = e.target.files[0];
+      postImagesData();
+    })
+
+  </script>
 </body>
 
 </html>
