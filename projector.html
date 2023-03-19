@@ -27,17 +27,25 @@
     }
   </style>
   <script>    
+    var prevEvtData = null;
+
     function resizeCanvas() {
       const canvas = document.getElementById('projectionCanvas');
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      if (prevEvtData != null) {
+        drawEvtData(prevEvtData);
+      }
     }
 
     window.addEventListener('resize', resizeCanvas);
 
     window.addEventListener("message", (event) => {
-      const evt_data = event.data;
+      prevEvtData = event.data;
+      drawEvtData(event.data);
+    });
 
+    function drawEvtData(evt_data) {
 			if (evt_data.scene === "lines") {
 				drawLines(evt_data);
       } else if (evt_data.scene === "text") {
@@ -47,7 +55,7 @@
       } else if (evt_data.scene === "images") {
         drawImages(evt_data);
       }
-    });
+    };
 
     window.onload = function() {
       resizeCanvas();

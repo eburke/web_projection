@@ -12,13 +12,31 @@
       window.location.href = loc.replace('http://', 'https://');
     }
     let projectorWindow = null;
+    var selectedFormId = null;
+
+    const formIdToPostFunction = new Map();
+    formIdToPostFunction.set('linesForm', postLinesData);
+    formIdToPostFunction.set('textForm', postTextData);
+    formIdToPostFunction.set('shapesForm', postShapesData);
+    formIdToPostFunction.set('imagesForm', postImagesData);
 
     function openProjectorWindow(focus = true) {
       if (!projectorWindow || projectorWindow.closed) {
         const features = "location=no,menubar=no,status=no,toolbar=no,scrollbars=no,resizable=yes";
-        projectorWindow = window.open('projector.html', '_blank', features);
+        projectorWindow = window.open('projector.html', 'projectorWindow', features);
+        // A hack to delay sending data until it has had time to display.
+        setTimeout(() => {
+          syncProjectorWindow();
+        }, 1000);
       } else if (focus) {
         projectorWindow.focus();
+      }
+    }
+
+    function syncProjectorWindow() {
+      if (selectedFormId != null) {
+        const postMethod = formIdToPostFunction.get(selectedFormId);
+        postMethod();
       }
     }
 
@@ -37,8 +55,7 @@
         foregroundColor: document.getElementById('lines_foregroundColor').value,
         backgroundColor: document.getElementById('lines_backgroundColor').value,
       };
-
-      projectorWindow.postMessage(linesData, "*");
+      postDataToProjectorWindow(linesData);
     }
 
     function postTextData() {
@@ -55,8 +72,7 @@
         solo: document.getElementById('text_solo').checked,
         mirror: document.getElementById('text_mirror').checked,
       };
-
-      projectorWindow.postMessage(textData, "*");
+      postDataToProjectorWindow(textData);
     }
 
     function postShapesData() {
@@ -72,28 +88,31 @@
         height: parseInt(document.getElementById("shapes_height").value, 10),
         shape: getSelectedShape()
       };
-
-      projectorWindow.postMessage(shapesData, "*");
+      postDataToProjectorWindow(shapesData);
     }
 
     let imageFile = null;
 
-    function postImagesData() {
-      if (imageFile) {
-        openProjectorWindow(false);
-
-        const imagesData = {
-          scene: "images",
-          imageFile: imageFile, // type File, never null
-          size: parseInt(document.getElementById("images_size").value),
-          angle: parseInt(document.getElementById("images_angle").value),
-          mirror: document.getElementById("images_mirror").checked,
-          backgroundColor: document.getElementById("images_backgroundColor").value,
-          solo: document.getElementById('images_solo').checked,
-        };
-
-        projectorWindow.postMessage(imagesData, "*");
+    function postDataToProjectorWindow(data) {
+      if (projectorWindow) {
+        projectorWindow.postMessage(data, "*");
       }
+    }
+
+    function postImagesData() {
+      openProjectorWindow(false);
+
+      const imagesData = {
+        scene: "images",
+        imageFile: imageFile, // type File, never null
+        size: parseInt(document.getElementById("images_size").value),
+        angle: parseInt(document.getElementById("images_angle").value),
+        mirror: document.getElementById("images_mirror").checked,
+        backgroundColor: document.getElementById("images_backgroundColor").value,
+        solo: document.getElementById('images_solo').checked,
+      };
+
+      postDataToProjectorWindow(imagesData);
     }
 
     function getSelectedShape() {
@@ -111,6 +130,7 @@
     }
 
     function showForm(formId) {
+      selectedFormId = formId;
       syncListSelection();
       openProjectorWindow(false);
       const forms = document.querySelectorAll('.form-container');
@@ -120,6 +140,7 @@
           form.classList.add('active');
         }
       });
+      syncProjectorWindow();
     }
 
     function syncListSelection() {
@@ -146,7 +167,11 @@
   <div id="titlePanel">
     <h1>Projection Studio for Web</h1>
     <p>by Eric Burke <a href="https://www.instagram.com/genuineburke/" target="_blank"
-        rel="noopener noreferrer">@GenuineBurke</a></p>
+        rel="noopener noreferrer">@GenuineBurke</a>
+      <div id="feedback"><a href="https://forms.gle/DXsN9yW4wjATon2S8" target="_blank"
+        rel="noopener noreferrer">Report a bug or request a new feature!</a></div>
+      </p>
+    
     <button id="open_projector_btn" onclick="openProjectorWindow()">Open Projection Window</button>
   </div>
   <div id="workspace">
