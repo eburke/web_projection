@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
-  <title>Projection Studio</title>
+  <title>Projection Studio for Web by @GenuineBurke</title>
   <script>
     let projectorWindow = null;
 
@@ -92,7 +92,6 @@
       }
     }
 
-
     function getSelectedShape() {
       let radioButtons = document.getElementsByName("shapes_shape");
       let selectedShape;
@@ -141,8 +140,9 @@
 
 <body>
   <div id="titlePanel">
-    <h1>Projection Studio</h1>
-    <button onclick="openProjectorWindow()">Open Projection Window</button>
+    <h1>Projection Studio for Web</h1>
+    <p>by Eric Burke <a href="https://www.instagram.com/genuineburke/" target="_blank" rel="noopener noreferrer">@GenuineBurke</a></p>
+    <button id="open_projector_btn" onclick="openProjectorWindow()">Open Projection Window</button>
   </div>
   <div id="workspace">
     <div id="listPanel">
@@ -160,6 +160,12 @@
         -->
       <div id="linesForm" class="form-container">
         <form>
+          <label for="lines_foregroundColor">Line&nbsp;Color:</label>
+          <input type="color" id="lines_foregroundColor" value="#ffffff" oninput="postLinesData()">
+
+          <label for="lines_backgroundColor">Background&nbsp;Color:</label>
+          <input type="color" id="lines_backgroundColor" value="#000000" oninput="postLinesData()">
+
           <label for="lines_strokeWidth">Stroke&nbsp;Width:</label>
           <input type="range" id="lines_strokeWidth" min="1" max="100" step="1" value="2" oninput="postLinesData()">
 
@@ -168,13 +174,6 @@
 
           <label for="lines_angle">Angle:</label>
           <input type="range" id="lines_angle" min="0" max="180" step="1" value="0" oninput="postLinesData()">
-
-          <label for="lines_foregroundColor">Line&nbsp;Color:</label>
-          <input type="color" id="lines_foregroundColor" value="#ffffff" oninput="postLinesData()">
-
-          <label for="lines_backgroundColor">Background&nbsp;Color:</label>
-          <input type="color" id="lines_backgroundColor" value="#000000" oninput="postLinesData()">
-
         </form>
       </div>
 
@@ -185,6 +184,12 @@
         -->
       <div id="textForm" class="form-container">
         <form>
+          <label for="text_textColor">Text&nbsp;Color:</label>
+          <input type="color" id="text_foregroundColor" value="#ffffff" oninput="postTextData()">
+
+          <label for="text_backgroundColor">Background&nbsp;Color:</label>
+          <input type="color" id="text_backgroundColor" value="#000000" oninput="postTextData()">
+
           <label for="text_text">Text:</label>
           <input type="text" id="text_text" name="text_text" value="Enter Text Here " oninput="postTextData()">
 
@@ -206,12 +211,6 @@
             <option value="'Lucida Handwriting', cursive">Lucida Handwriting</option>
           </select>
 
-          <label for="text_textColor">Text&nbsp;Color:</label>
-          <input type="color" id="text_foregroundColor" value="#ffffff" oninput="postTextData()">
-
-          <label for="text_backgroundColor">Background&nbsp;Color:</label>
-          <input type="color" id="text_backgroundColor" value="#000000" oninput="postTextData()">
-
           <label for="text_angle">Angle:</label>
           <input type="range" id="text_angle" value="0" min="0" max="360" oninput="postTextData()">
 
@@ -230,7 +229,7 @@
         -->
       <div id="shapesForm" class="form-container">
         <form>
-          <label for="shapes_foregroundColor">Foreground&nbsp;Color:</label>
+          <label for="shapes_foregroundColor">Shape&nbsp;Color:</label>
           <input type="color" value="#ffffff" id="shapes_foregroundColor" oninput="postShapesData()">
 
           <label for="shapes_backgroundColor">Background&nbsp;Color:</label>
@@ -271,6 +270,9 @@
         -->
       <div id="imagesForm" class="form-container">
         <form>
+          <label for="images_backgroundColor">Background&nbsp;Color:</label>
+          <input type="color" id="images_backgroundColor" oninput="postImagesData()">
+
           <label for="images_file_input">Image:</label>
           <input type="file" id="images_file_input" accept="image/*">
 
@@ -279,12 +281,9 @@
 
           <label for="images_angle">Angle:</label>
           <input type="range" id="images_angle" min="0" max="360" step="1" value="0" oninput="postImagesData()">
-          
+
           <label for="images_mirror">Mirror:</label>
           <input type="checkbox" id="images_mirror" oninput="postImagesData()">
-
-          <label for="images_backgroundColor">Background&nbsp;Color:</label>
-          <input type="color" id="images_backgroundColor" oninput="postImagesData()">
 
           <label for="images_solo">Solo:</label>
           <input type="checkbox" id="images_solo" oninput="postImagesData()">
