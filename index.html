@@ -7,6 +7,10 @@
   <link rel="stylesheet" href="styles.css">
   <title>Projection Studio for Web by @GenuineBurke</title>
   <script>
+    var loc = window.location.href + '';
+    if (loc.indexOf('http://') == 0) {
+      window.location.href = loc.replace('http://', 'https://');
+    }
     let projectorWindow = null;
 
     function openProjectorWindow(focus = true) {
@@ -141,7 +145,8 @@
 <body>
   <div id="titlePanel">
     <h1>Projection Studio for Web</h1>
-    <p>by Eric Burke <a href="https://www.instagram.com/genuineburke/" target="_blank" rel="noopener noreferrer">@GenuineBurke</a></p>
+    <p>by Eric Burke <a href="https://www.instagram.com/genuineburke/" target="_blank"
+        rel="noopener noreferrer">@GenuineBurke</a></p>
     <button id="open_projector_btn" onclick="openProjectorWindow()">Open Projection Window</button>
   </div>
   <div id="workspace">
