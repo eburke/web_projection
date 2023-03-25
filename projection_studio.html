@@ -2,6 +2,11 @@
 <html lang="en">
 
 <head>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lobster+Two:ital,wght@1,700&family=Roboto+Flex:wght@500&display=swap"
+    rel="stylesheet">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
@@ -160,6 +165,34 @@
       clickedElement.classList.add('list-item-selected');
     }
 
+    function initRangeSlidersWithLabels() {
+      const rangeInputs = document.querySelectorAll('input[type="range"]');
+
+      rangeInputs.forEach((input) => {
+        // Create a wrapper span element
+        const wrapper = document.createElement('span');
+        wrapper.classList.add('slider-wrapper');
+
+        // Create the label element
+        const label = document.createElement('label');
+        label.setAttribute('for', input.id);
+        label.textContent = input.value;
+
+        // Wrap the input element with the wrapper span
+        input.parentNode.insertBefore(wrapper, input);
+        wrapper.appendChild(input);
+
+        // Add the label to the wrapper span
+        wrapper.appendChild(label);
+
+        // Add an event listener to update the label text when the slider value changes
+        input.addEventListener('input', function () {
+          label.textContent = input.value;
+        });
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', initRangeSlidersWithLabels);
   </script>
 </head>
 
@@ -168,10 +201,10 @@
     <h1>Projection Studio for Web</h1>
     <p>by Eric Burke <a href="https://www.instagram.com/genuineburke/" target="_blank"
         rel="noopener noreferrer">@GenuineBurke</a>
-      <div id="feedback"><a href="https://forms.gle/DXsN9yW4wjATon2S8" target="_blank"
-        rel="noopener noreferrer">Report a bug or request a new feature!</a></div>
-      </p>
-    
+    <div id="feedback"><a href="https://forms.gle/DXsN9yW4wjATon2S8" target="_blank" rel="noopener noreferrer">Report a
+        bug or request a new feature!</a></div>
+    </p>
+
     <button id="open_projector_btn" onclick="openProjectorWindow()">Open Projection Window</button>
   </div>
   <div id="workspace">
@@ -248,7 +281,10 @@
           <input type="checkbox" id="text_solo" oninput="postTextData()">
 
           <label for="text_mirror">Mirror:</label>
-          <input type="checkbox" id="text_mirror" oninput="postTextData()">
+          <span>
+            <input type="checkbox" id="text_mirror" oninput="postTextData()">
+            <span class="tip">(useful when rear-projecting onto a screen)</span>
+          </span>
         </form>
       </div>
 
@@ -289,6 +325,10 @@
             <input type="radio" id="shapes_shape_triangle" name="shapes_shape" value="Triangles"
               oninput="postShapesData()">
             <label for="shapes_shape_triangle">Triangle</label>
+            <br />
+            <input type="radio" id="shapes_shape_star" name="shapes_shape" value="Stars"
+              oninput="postShapesData()">
+            <label for="shapes_shape_star">Star</label>
           </div>
         </form>
       </div>
@@ -313,7 +353,10 @@
           <input type="range" id="images_angle" min="0" max="360" step="1" value="0" oninput="postImagesData()">
 
           <label for="images_mirror">Mirror:</label>
-          <input type="checkbox" id="images_mirror" oninput="postImagesData()">
+          <span>
+            <input type="checkbox" id="images_mirror" oninput="postImagesData()">
+            <span class="tip">(useful when rear-projecting onto a screen)</span>
+          </span>
 
           <label for="images_solo">Solo:</label>
           <input type="checkbox" id="images_solo" oninput="postImagesData()">

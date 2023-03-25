@@ -31,6 +31,9 @@ function drawShapes(shapesData) {
         case "Triangles":
           drawTriangle(ctx, x, y, shapesData.width, shapesData.height);
           break;
+        case "Stars":
+          drawStar(ctx, x, y, shapesData.width, shapesData.height);
+          break;
       }
     }
   }
@@ -51,6 +54,40 @@ function drawTriangle(ctx, x, y, width, height) {
   ctx.moveTo(x, y + height);
   ctx.lineTo(x + width / 2, y);
   ctx.lineTo(x + width, y + height);
+  ctx.closePath();
+  ctx.fill();
+}
+
+function drawStar(ctx, x, y, width, height, numPoints=5) {
+  // Calculate the center of the star
+  const centerX = x + width / 2;
+  const centerY = y + height / 2;
+
+  // Calculate the outer and inner radius of the star
+  const outerRadius = Math.min(width, height) / 2;
+  const innerRadius = outerRadius / 2;
+
+  // Define the angle between each point
+  const angle = Math.PI / numPoints;
+
+  // Begin the path
+  ctx.beginPath();
+
+  // Draw the star
+  for (let i = 0; i < 2 * numPoints; i++) {
+    const radius = i % 2 === 0 ? outerRadius : innerRadius;
+    const currentAngle = i * angle - Math.PI / 2;
+    const xPoint = centerX + radius * Math.cos(currentAngle);
+    const yPoint = centerY + radius * Math.sin(currentAngle);
+
+    if (i === 0) {
+      ctx.moveTo(xPoint, yPoint);
+    } else {
+      ctx.lineTo(xPoint, yPoint);
+    }
+  }
+
+  // Close the path and fill the star
   ctx.closePath();
   ctx.fill();
 }
