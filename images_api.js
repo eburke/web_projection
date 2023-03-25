@@ -88,7 +88,7 @@ function drawImagesData(imagesData) {
             // This translation ensures the tiled pattern is always centered in the screen
             ctx.translate(dx, dy);
 
-            const overdraw = maxLen / 2;
+            const overdraw = maxLen;
             ctx.fillRect(-overdraw, -overdraw,
                 canvas.width + (Math.abs(dx) * 2) + (overdraw * 2), canvas.height + (Math.abs(dy) * 2) + (overdraw * 2));
 
