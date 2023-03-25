@@ -8,6 +8,7 @@ html,
 body {
   width: 100%;
   height: 100%;
+  font-family: 'Roboto Flex', sans-serif;
 }
 
 #titlePanel {
@@ -19,6 +20,7 @@ body {
 
 #titlePanel h1 {
   grid-column: 1/2;
+  font-family: 'Lobster Two', cursive;
 }
 
 #titlePanel p {
@@ -98,4 +100,20 @@ input {
 input[type="checkbox"] {
   /* left aligns the checkboxes inside of the grid */
   justify-self: start;
+}
+
+.slider-wrapper {
+  display: flex;
+}
+
+.slider-wrapper input[type="range"] {
+  flex-grow: 1;
+}
+
+.slider-wrapper label {
+  margin-left: 10px;
+}
+
+.tip {
+  padding-left: 0.5em;
 }
