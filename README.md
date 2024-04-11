@@ -2,7 +2,7 @@
 
 Created for the Shutterfest 2023 class titled "Projection Shootout", Projection Studio for Web is a tool for photographers to use with light projection photoshoots. The app can display various geometric patterns as well as images, which can be rotated, scaled, and tiled.
 
-**Please consider mentioning or tagging [@GenuineBurke](https://www.instagram.com/genuineburke/) on Instagram alongside any photos you publish using the app. Your support is appreciated!**
+**Please consider crediting me alongside any photos you publish using the app. Your support is appreciated!**
 
 ## Author
 
@@ -10,7 +10,6 @@ Created for the Shutterfest 2023 class titled "Projection Shootout", Projection 
 
 - Website: [https://www.genuineburke.com](https://www.genuineburke.com)
 - Email: [eric@genuineburke.com](mailto:eric@genuineburke.com)
-- Instagram: [@GenuineBurke](https://www.instagram.com/genuineburke/)
 
 ## About
 
