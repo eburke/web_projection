@@ -24,12 +24,17 @@ function drawZigzags(zigzagData) {
 
   // Draw the zigzag lines.  y is the center, so the zigs are above and zags are below.
   for (let y = -amplitude; y < canvas.height+amplitude; y += lineSpacing) {
+
+    // start a bit to the left of the canvas so we don't se partial lines when the
+    // stroke width is thick.
+    let startX = -halfCycleWidth;
+
     ctx.beginPath();
 
     // start at the positive peak
-    ctx.moveTo(0, y+amplitude); // Starting point of the line
+    ctx.moveTo(startX, y+amplitude); // Starting point of the line
 
-    for (let x = 0; x < canvas.width; x += fullCycleWidth) {
+    for (let x = startX; x < canvas.width + halfCycleWidth; x += fullCycleWidth) {
       // move over half of the cycle
       const nextX = x + halfCycleWidth;
       const nextY = y - amplitude;
