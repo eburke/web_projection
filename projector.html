@@ -3,11 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="lines_api.js"></script>
-  <script src="zigzag_api.js"></script>
-  <script src="text_api.js"></script>
-  <script src="shapes_api.js"></script>
-  <script src="images_api.js"></script>
+  
   <title>Projector</title>
   <style>
     * {
@@ -27,11 +23,20 @@
       background-color: black;
     }
   </style>
-  <script>    
-    var prevEvtData = null;
+</head>
+<body>
+  <canvas id="projectionCanvas"></canvas>
+  <script src="lines_api.js"></script>
+  <script src="zigzag_api.js"></script>
+  <script src="text_api.js"></script>
+  <script src="shapes_api.js"></script> 
+  <script src="images_api.js"></script>
+  
+  <script>
+    const canvas = document.getElementById('projectionCanvas');
+    let prevEvtData = null;
 
     function resizeCanvas() {
-      const canvas = document.getElementById('projectionCanvas');
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       if (prevEvtData != null) {
@@ -39,16 +44,25 @@
       }
     }
 
-    window.addEventListener('resize', resizeCanvas);
-
+    let debounceTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(resizeCanvas, 100);
+    });
+    
     window.addEventListener("message", (event) => {
       prevEvtData = event.data;
       drawEvtData(event.data);
     });
 
     function drawEvtData(evt_data) {
-			if (evt_data.scene === "lines") {
-				drawLines(evt_data);
+      if (!evt_data || !evt_data.scene) {
+        console.error("Invalid event data or missing scene type:", evt_data);
+        return; // Log the error and terminate the function if validation fails
+      }
+
+      if (evt_data.scene === "lines") {
+        drawLines(evt_data);
       } else if (evt_data.scene === "zigzag") {
         drawZigzags(evt_data);
       } else if (evt_data.scene === "text") {
@@ -57,16 +71,13 @@
         drawShapes(evt_data);
       } else if (evt_data.scene === "images") {
         drawImages(evt_data);
+      } else {
+        console.error("Unsupported scene type:", evt_data.scene);
       }
-    };
-
-    window.onload = function() {
-      resizeCanvas();
     }
+
+    window.onload = resizeCanvas
   </script>
-</head>
-<body>
-  <canvas id="projectionCanvas"></canvas>
 </body>
 </html>
 
